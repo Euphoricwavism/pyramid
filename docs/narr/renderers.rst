@@ -66,7 +66,7 @@
 .. :ref:`views_which_use_a_renderer`.
 
 シリアライズするレンダラーや、テンプレートシステムを使うレンダラーなど、さまざまな種類のレンダラーがあります。
-:ref:`views_which_use_a_renderer` も参照してください。
+:ref:`views_which_use_a_renderer` も見てください。
 
 
 .. index::
@@ -131,7 +131,7 @@
 
 ``request.response`` 属性のプロパティを設定することで、レンダラーを使う Response でない値を返すようなビューに様々な
 body でないレスポンス属性 (例えば、ヘッダーや HTTP ステータスコード等) を設定できます。
-:ref:`request_response_attr` を参照してください。
+:ref:`request_response_attr` を見てください。
 
 
 .. If the :term:`view callable` associated with a :term:`view configuration`
@@ -264,7 +264,7 @@ body でないレスポンス属性 (例えば、ヘッダーや HTTP ステー�
 
 文字列レンダラーを使うビューには、 ``request.response`` の API
 を使って、様々なボディでないレスポンス属性を設定することができます。
-:ref:`request_response_attr` を参照してください。
+:ref:`request_response_attr` を見てください。
 
 
 .. index::
@@ -332,7 +332,7 @@ JSON にシリアライズします。
 .. note::
 
    デフォルトの ``json`` レンダラーを上書きするために、追加の引数を渡すことができます。
-   詳細は :class:`pyramid.renderers.JSON` および :ref:`adding_and_overriding_renderers` を参照してください。
+   詳細は :class:`pyramid.renderers.JSON` および :ref:`adding_and_overriding_renderers` を見てください。
 
 
 .. You can configure a view to use the JSON renderer by naming ``json`` as the
@@ -357,7 +357,7 @@ JSON にシリアライズします。
 
 JSON レンダラーを使うビューには、 ``request.response`` 属性の API
 を使って、様々なbody でないレスポンス属性を設定できます。
-:ref:`request_response_attr` を参照してください。
+:ref:`request_response_attr` を見てください。
 
 
 
@@ -446,7 +446,8 @@ Pyramid では、カスタムオブジェクトのクラスに ``__json__``
 .. See :class:`pyramid.renderers.JSON` and
 .. :ref:`adding_and_overriding_renderers` for more information.
 
-詳細は :class:`pyramid.renderers.JSON` および :ref:`adding_and_overriding_renderers` を参照してください。
+詳細は :class:`pyramid.renderers.JSON` および
+:ref:`adding_and_overriding_renderers` を見てください。
 
 
 .. .. note::
@@ -461,23 +462,39 @@ Pyramid では、カスタムオブジェクトのクラスに ``__json__``
 .. index::
    pair: renderer; JSONP
 
+.. JSONP Renderer
+
 .. _jsonp_renderer:
 
-JSONP Renderer
-~~~~~~~~~~~~~~
+JSONP レンダラー
+~~~~~~~~~~~~~~~~
+
+.. .. note::
+
+..   This feature is new in Pyramid 1.1.
 
 .. note::
 
-   This feature is new in Pyramid 1.1.
+   この機能は Pyramid 1.1 で追加されました。
 
-:class:`pyramid.renderers.JSONP` is a `JSONP
-<http://en.wikipedia.org/wiki/JSONP>`_ renderer factory helper which
-implements a hybrid json/jsonp renderer.  JSONP is useful for making
-cross-domain AJAX requests.
 
-Unlike other renderers, a JSONP renderer needs to be configured at startup
-time "by hand".  Configure a JSONP renderer using the
-:meth:`pyramid.config.Configurator.add_renderer` method:
+.. :class:`pyramid.renderers.JSONP` is a `JSONP
+.. <http://en.wikipedia.org/wiki/JSONP>`_ renderer factory helper which
+.. implements a hybrid json/jsonp renderer.  JSONP is useful for making
+.. cross-domain AJAX requests.
+
+:class:`pyramid.renderers.JSONP` は `JSONP <http://en.wikipedia.org/wiki/JSONP>`_
+レンダラーファクトリーのヘルパーです。
+このヘルパーはハイブリッドな json/jsonp のレンダラーを実装しています。
+JSONP はクロスドメイン AJAX リクエストの生成に有用です。
+
+
+.. Unlike other renderers, a JSONP renderer needs to be configured at startup
+.. time "by hand".  Configure a JSONP renderer using the
+.. :meth:`pyramid.config.Configurator.add_renderer` method:
+
+他のレンダラーと異なり、JSONP レンダラーは起動時に "手動での" 設定を必要とします。
+JSONP レンダラーの設定は :meth:`pyramid.config.Configurator.add_renderer` メソッドで行います:
 
 .. code-block:: python
 
@@ -486,10 +503,14 @@ time "by hand".  Configure a JSONP renderer using the
    config = Configurator()
    config.add_renderer('jsonp', JSONP(param_name='callback'))
 
-Once this renderer is registered via
-:meth:`~pyramid.config.Configurator.add_renderer` as above, you can use
-``jsonp`` as the ``renderer=`` parameter to ``@view_config`` or
-:meth:`pyramid.config.Configurator.add_view`:
+.. Once this renderer is registered via
+.. :meth:`~pyramid.config.Configurator.add_renderer` as above, you can use
+.. ``jsonp`` as the ``renderer=`` parameter to ``@view_config`` or
+.. :meth:`pyramid.config.Configurator.add_view`:
+
+上記のように一度このレンダラーが :meth:`~pyramid.config.Configurator.add_renderer`
+で登録されると、 ``@view_config`` や :meth:`pyramid.config.Configurator.add_view` での
+``renderer=`` のパラメーターとして ``jsonp`` が使えるようになります:
 
 .. code-block:: python
 
@@ -499,23 +520,40 @@ Once this renderer is registered via
    def myview(request):
        return {'greeting':'Hello world'}
 
-When a view is called that uses a JSONP renderer:
+.. When a view is called that uses a JSONP renderer:
 
-- If there is a parameter in the request's HTTP query string (aka
-  ``request.GET``) that matches the ``param_name`` of the registered JSONP
-  renderer (by default, ``callback``), the renderer will return a JSONP
-  response.
+.. - If there is a parameter in the request's HTTP query string (aka
+..   ``request.GET``) that matches the ``param_name`` of the registered JSONP
+..   renderer (by default, ``callback``), the renderer will return a JSONP
+..   response.
 
-- If there is no callback parameter in the request's query string, the
-  renderer will return a 'plain' JSON response.
+.. - If there is no callback parameter in the request's query string, the
+..   renderer will return a 'plain' JSON response.
 
-Javscript library AJAX functionality will help you make JSONP requests.
-For example, JQuery has a `getJSON function
-<http://api.jquery.com/jQuery.getJSON/>`_, and has equivalent (but more
-complicated) functionality in its `ajax function
-<http://api.jquery.com/jQuery.ajax/>`_.
+JSONP レンダラーを使うビューが呼び出されたとき、
 
-For example (Javascript):
+- リクエストの HTTP クエリーストリング ( ``request.GET`` ) のパラメーターのうち
+  JSONP レンダラーの ``param_name`` にマッチするもの (デフォルトでは ``callback``)
+  があれば、そのレンダラーは JSONP レスポンスを返します。
+
+- リクエストのクエリーストリングにコールバック用のパラメーターがなければ、
+  レンダラーは 'プレーン' な JSON レスポンスを返します。
+
+.. Javscript library AJAX functionality will help you make JSONP requests.
+.. For example, JQuery has a `getJSON function
+.. <http://api.jquery.com/jQuery.getJSON/>`_, and has equivalent (but more
+.. complicated) functionality in its `ajax function
+.. <http://api.jquery.com/jQuery.ajax/>`_.
+
+JavaScript ライブラリの AJAX 機能は JSONP リクエストの生成を助けてくれるでしょう。
+たとえば jQuery には `getJSON 関数 <http://api.jquery.com/jQuery.getJSON/>`_
+や、それと等価 (ですが、より複雑) な機能を含む `ajax 関数 <http://api.jquery.com/jQuery.ajax/>`_
+があります。
+
+
+.. For example (Javascript):
+
+以下は JavaScript の例です:
 
 .. code-block:: javascript
 
@@ -526,62 +564,120 @@ For example (Javascript):
                  '&callback=?';
    jqhxr = $.getJSON(api_url);
 
-The string ``callback=?`` above in the ``url`` param to the JQuery
-``getAjax`` function indicates to jQuery that the query should be made as
-a JSONP request; the ``callback`` parameter will be automatically filled
-in for you and used.
+.. The string ``callback=?`` above in the ``url`` param to the JQuery
+.. ``getAjax`` function indicates to jQuery that the query should be made as
+.. a JSONP request; the ``callback`` parameter will be automatically filled
+.. in for you and used.
 
-The same custom-object serialization scheme defined used for a "normal" JSON
-renderer in :ref:`json_serializing_custom_objects` can be used when passing
-values to a JSONP renderer too.
+jQuery の ``getJSON`` 関数に渡された ``url`` パラメーター内の文字列 ``callback=?``
+はクエリが JSONP のリクエストとして扱われるようjQuery に指示します。
+``callback`` パラメーターは jQuery によって自動的に埋められ、使用されます。
+
+
+.. The same custom-object serialization scheme defined used for a "normal" JSON
+.. renderer in :ref:`json_serializing_custom_objects` can be used when passing
+.. values to a JSONP renderer too.
+
+:ref:`json_serializing_custom_objects` で、 "通常の" JSON
+レンダラー向けにカスタムオブジェクトをシリアライズする方法を述べました。
+この方法は JSONP レンダラーでも同様に利用できます。
+
 
 .. index::
    pair: renderer; chameleon
 
+
+.. ``*.pt`` or ``*.txt``: Chameleon Template Renderers
+
 .. _chameleon_template_renderers:
 
-``*.pt`` or ``*.txt``: Chameleon Template Renderers
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``*.pt`` または ``*.txt``: Chameleon テンプレートレンダラー
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Two built-in renderers exist for :term:`Chameleon` templates.
+.. Two built-in renderers exist for :term:`Chameleon` templates.
 
-If the ``renderer`` attribute of a view configuration is an absolute path, a
-relative path or :term:`asset specification` which has a final path element
-with a filename extension of ``.pt``, the Chameleon ZPT renderer is used.
-See :ref:`chameleon_zpt_templates` for more information about ZPT templates.
+:term:`Chameleon` テンプレートには、ふたつのビルトインのレンダラーがあります。
 
-If the ``renderer`` attribute of a view configuration is an absolute path or
-a :term:`asset specification` which has a final path element with a filename
-extension of ``.txt``, the :term:`Chameleon` text renderer is used.  See
-:ref:`chameleon_text_templates` for more information about Chameleon text
-templates.
 
-The behavior of these renderers is the same, except for the engine
-used to render the template.
+.. If the ``renderer`` attribute of a view configuration is an absolute path, a
+.. relative path or :term:`asset specification` which has a final path element
+.. with a filename extension of ``.pt``, the Chameleon ZPT renderer is used.
+.. See :ref:`chameleon_zpt_templates` for more information about ZPT templates.
 
-When a ``renderer`` attribute that names a template path or :term:`asset
-specification` (e.g. ``myproject:templates/foo.pt`` or
-``myproject:templates/foo.txt``) is used, the view must return a
-:term:`Response` object or a Python *dictionary*.  If the view callable with
-an associated template returns a Python dictionary, the named template will
-be passed the dictionary as its keyword arguments, and the template renderer
-implementation will return the resulting rendered template in a response to
-the user.  If the view callable returns anything but a Response object or a
-dictionary, an error will be raised.
+ビュー設定の ``renderer`` 属性が絶対パス、相対パスまたは :term:`asset specification`
+であって、ファイル名の拡張子が ``.pt`` のときに Chameleon ZPT レンダラーが使われます。
+ZPT テンプレートについてのより詳しい情報は :ref:`chameleon_zpt_templates` を見てください。
 
-Before passing keywords to the template, the keyword arguments derived from
-the dictionary returned by the view are augmented.  The callable object --
-whatever object was used to define the view -- will be automatically inserted
-into the set of keyword arguments passed to the template as the ``view``
-keyword.  If the view callable was a class, the ``view`` keyword will be an
-instance of that class.  Also inserted into the keywords passed to the
-template are ``renderer_name`` (the string used in the ``renderer`` attribute
-of the directive), ``renderer_info`` (an object containing renderer-related
-information), ``context`` (the context resource of the view used to render
-the template), and ``request`` (the request passed to the view used to render
-the template).  ``request`` is also available as ``req`` in Pyramid 1.3+.
 
-Here's an example view configuration which uses a Chameleon ZPT renderer:
+.. If the ``renderer`` attribute of a view configuration is an absolute path or
+.. a :term:`asset specification` which has a final path element with a filename
+.. extension of ``.txt``, the :term:`Chameleon` text renderer is used.  See
+.. :ref:`chameleon_text_templates` for more information about Chameleon text
+.. templates.
+
+ビュー設定の ``renderer`` 属性が絶対パスまたは
+:term:`asset specification` であって、ファイル名の拡張子が ``.txt`` のときに
+:term:`Chameleon` text レンダラーが使われます。
+Chameleon text テンプレートについてのより詳しい情報は
+:ref:`chameleon_text_templates` を見てください。
+
+
+.. The behavior of these renderers is the same, except for the engine
+.. used to render the template.
+
+これらのレンダラーの振る舞いは同じです。
+ただし、テンプレートのレンダリングに使われるエンジンのみが異なります。
+
+
+.. When a ``renderer`` attribute that names a template path or :term:`asset
+.. specification` (e.g. ``myproject:templates/foo.pt`` or
+.. ``myproject:templates/foo.txt``) is used, the view must return a
+.. :term:`Response` object or a Python *dictionary*.  If the view callable with
+.. an associated template returns a Python dictionary, the named template will
+.. be passed the dictionary as its keyword arguments, and the template renderer
+.. implementation will return the resulting rendered template in a response to
+.. the user.  If the view callable returns anything but a Response object or a
+.. dictionary, an error will be raised.
+
+``renderer`` 属性にテンプレートのパス、または :term:`asset specification`
+(たとえば ``myproject:templates/foo.pt`` または ``myproject:templates/foo.txt``)
+が指定されたとき、ビューは :term:`Response` オブジェクトか Python の
+*辞書* を返さなければなりません。
+テンプレートに関連づけられたビュー callable が Python の辞書を返すとき、
+テンプレートには辞書がキーワード引数として渡され、
+レンダラー実装がテンプレートをレンダリングした結果をレスポンスに含めてユーザーに返します。
+ビュー callable が Response オブジェクトでも辞書でもないものを返した場合、
+エラーが送出されるでしょう。
+
+
+.. Before passing keywords to the template, the keyword arguments derived from
+.. the dictionary returned by the view are augmented.  The callable object --
+.. whatever object was used to define the view -- will be automatically inserted
+.. into the set of keyword arguments passed to the template as the ``view``
+.. keyword.  If the view callable was a class, the ``view`` keyword will be an
+.. instance of that class.  Also inserted into the keywords passed to the
+.. template are ``renderer_name`` (the string used in the ``renderer`` attribute
+.. of the directive), ``renderer_info`` (an object containing renderer-related
+.. information), ``context`` (the context resource of the view used to render
+.. the template), and ``request`` (the request passed to the view used to render
+.. the template).  ``request`` is also available as ``req`` in Pyramid 1.3+.
+
+テンプレートにキーワードが渡される前に、
+ビューが返した辞書から生成されたキーワード引数にいくつかの引数が追加されます。
+callable オブジェクト -- ビューの定義に使われたオブジェクトなら何でも --
+が、テンプレートに渡されるキーワード引数の集合に ``view`` キーワードとして自動的に挿入されます。
+ビュー callable がクラスであれば、 ``view`` キーワードはそのクラスのインスタンスになります。
+それ以外にテンプレートに渡されるキーワードに追加されるのは
+``renderer_name`` (ディレクティブの ``renderer`` 属性に指定された文字列)、
+``renderer_info`` (レンダラーに関連する情報を含むオブジェクト)、
+``context`` (テンプレートのレンダリングに使われるビューのコンテキストリソース)、
+``request`` (テンプレートのレンダリングに使われるビューに渡されたリクエスト) です。
+``request`` は、 Pyramid 1.3 以降は ``req`` でも利用できます。
+
+
+.. Here's an example view configuration which uses a Chameleon ZPT renderer:
+
+以下は、Chameleon ZPT レンダラーを使うビュー設定の例です:
 
 .. code-block:: python
    :linenos:
@@ -593,7 +689,9 @@ Here's an example view configuration which uses a Chameleon ZPT renderer:
                     context='myproject.resources.Hello',
                     renderer='myproject:templates/foo.pt')
 
-Here's an example view configuration which uses a Chameleon text renderer:
+.. Here's an example view configuration which uses a Chameleon text renderer:
+
+以下は、Chameleon text レンダラーを使うビュー設定の例です:
 
 .. code-block:: python
    :linenos:
@@ -603,33 +701,55 @@ Here's an example view configuration which uses a Chameleon text renderer:
                     context='myproject.resources.Hello',
                     renderer='myproject:templates/foo.txt')
 
-Views which use a Chameleon renderer can vary response attributes by using
-the API of the ``request.response`` attribute.  See
-:ref:`request_response_attr`.
+.. Views which use a Chameleon renderer can vary response attributes by using
+.. the API of the ``request.response`` attribute.  See
+.. :ref:`request_response_attr`.
+
+Chameleon レンダラーを使うビューには、 ``request.response`` 属性の API
+を使って、様々なレスポンス属性を設定できます。
+:ref:`request_response_attr` を見てください。
+
 
 .. index::
    pair: renderer; mako
 
+.. ``*.mak`` or ``*.mako``: Mako Template Renderer
+
 .. _mako_template_renderers:
 
-``*.mak`` or ``*.mako``: Mako Template Renderer
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+``*.mak`` または ``*.mako``: Mako テンプレートレンダラー
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``Mako`` template renderer renders views using a Mako template.  When
-used, the view must return a Response object or a Python *dictionary*.  The
-dictionary items will then be used in the global template space. If the view
-callable returns anything but a Response object or a dictionary, an error
-will be raised.
+.. The ``Mako`` template renderer renders views using a Mako template.  When
+.. used, the view must return a Response object or a Python *dictionary*.  The
+.. dictionary items will then be used in the global template space. If the view
+.. callable returns anything but a Response object or a dictionary, an error
+.. will be raised.
 
-When using a ``renderer`` argument to a :term:`view configuration` to specify
-a Mako template, the value of the ``renderer`` may be a path relative to the
-``mako.directories`` setting (e.g.  ``some/template.mak``) or, alternately,
-it may be a :term:`asset specification`
-(e.g. ``apackage:templates/sometemplate.mak``).  Mako templates may
-internally inherit other Mako templates using a relative filename or a
-:term:`asset specification` as desired.
+``Mako`` テンプレートレンダラーは、Mako テンプレートを使ってビューをレンダリングします。
+これが使われるとき、ビューは Response オブジェクトか Python の *辞書* を返されければなりません。
+辞書の項目は、グローバルテンプレート空間で使われます。
+ビュー callable が Response オブジェクトでも辞書でもないものを返した場合、エラーが送出されるでしょう。
 
-Here's an example view configuration which uses a relative path:
+
+.. When using a ``renderer`` argument to a :term:`view configuration` to specify
+.. a Mako template, the value of the ``renderer`` may be a path relative to the
+.. ``mako.directories`` setting (e.g.  ``some/template.mak``) or, alternately,
+.. it may be a :term:`asset specification`
+.. (e.g. ``apackage:templates/sometemplate.mak``).  Mako templates may
+.. internally inherit other Mako templates using a relative filename or a
+.. :term:`asset specification` as desired.
+
+Mako テンプレートを明示するために :term:`view configuration` で ``renderer`` 引数を使う場合、
+``renderer`` の値には、設定値 ``mako.directories`` からの相対パス (たとえば ``some/template.mak``)
+か、または :term:`asset specification` (たとえば ``apackage:templates/sometemplate.mak``) が指定できます。
+Mako テンプレート内では、相対パスのファイル名または :term:`asset specification`
+を用いて他の Mako テンプレートを継承できます。
+
+
+.. Here's an example view configuration which uses a relative path:
+
+以下は、相対パスによるビュー設定の例です:
 
 .. code-block:: python
    :linenos:
@@ -641,13 +761,21 @@ Here's an example view configuration which uses a relative path:
                     context='myproject.resources.Hello',
                     renderer='foo.mak')
 
-It's important to note that in Mako's case, the 'relative' path name
-``foo.mak`` above is not relative to the package, but is relative to the
-directory (or directories) configured for Mako via the ``mako.directories``
-configuration file setting.
+.. It's important to note that in Mako's case, the 'relative' path name
+.. ``foo.mak`` above is not relative to the package, but is relative to the
+.. directory (or directories) configured for Mako via the ``mako.directories``
+.. configuration file setting.
 
-The renderer can also be provided in :term:`asset specification`
-format. Here's an example view configuration which uses one:
+Mako の場合の重要な注意として、上記の相対パス名 ``foo.mak`` はパッケージからの相対パスではなく、
+設定ファイルの設定値 ``mako.directories`` で設定したディレクトリー (単数または複数)
+からの相対パスになります。
+
+
+.. The renderer can also be provided in :term:`asset specification`
+.. format. Here's an example view configuration which uses one:
+
+このレンダラーは :term:`asset specification` の書式でも指定できます。
+以下はこの書式を使った場合のビュー設定の例です:
 
 .. code-block:: python
    :linenos:
@@ -657,13 +785,23 @@ format. Here's an example view configuration which uses one:
                     context='myproject.resources.Hello',
                     renderer='mypackage:templates/foo.mak')
 
-The above configuration will use the file named ``foo.mak`` in the
-``templates`` directory of the ``mypackage`` package.
+.. The above configuration will use the file named ``foo.mak`` in the
+.. ``templates`` directory of the ``mypackage`` package.
 
-The ``Mako`` template renderer can take additional arguments beyond the
-standard ``pyramid.reload_templates`` setting, see the
-:ref:`environment_chapter` for additional
-:ref:`mako_template_renderer_settings`.
+上記の設定では、 ``mypackage`` パッケージの ``templates`` ディレクトリー以下にある
+``foo.mak`` という名前のファイルが使われます。
+
+
+.. The ``Mako`` template renderer can take additional arguments beyond the
+.. standard ``pyramid.reload_templates`` setting, see the
+.. :ref:`environment_chapter` for additional
+.. :ref:`mako_template_renderer_settings`.
+
+``Mako`` テンプレートレンダラーは、標準の設定 ``pyramid.reload_templates``
+に加えて、追加の引数を取ることができます。
+追加の :ref:`mako_template_renderer_settings` については、
+:ref:`environment_chapter` を見てください。
+
 
 .. index::
    single: response headers (from a renderer)
