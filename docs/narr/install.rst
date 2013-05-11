@@ -141,7 +141,7 @@ UNIX システム上でソフトウェアをコンパイルするには、一般
 .. On Mac OS X, installing `XCode
 .. <http://developer.apple.com/tools/xcode/>`_ has much the same effect.
 
-Mac OS X では、`XCode<http://developer.apple.com/tools/xcode/>`_ 
+Mac OS X では、 `XCode <http://developer.apple.com/tools/xcode/>`_ 
 をインストールする事が同様の効果を持ちます。
 
 .. Once you've got development tools installed on your system, you can
