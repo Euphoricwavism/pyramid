@@ -3284,7 +3284,7 @@ Zope 特有の概念を理解する必要があれば、私たちはある非常
 .. externally.  And while it's not really the job of this document to defend it,
 .. Zope has been around for over 10 years and has an incredibly large, active
 .. community.  If you don't believe this,
-.. http://taichino.appspot.com/pypi_ranking/authors is an eye-opening reality
+.. http://pypi-ranking.info/author is an eye-opening reality
 .. check.
 
 それが単に単語 Zope のことなら: これは単に guilt by association (連座制)
@@ -3296,7 +3296,7 @@ Zope 特有の概念を理解する必要があれば、私たちはある非常
 defence することはこのドキュメントの仕事ではないのですが、
 Zope は10年以上の間存在してきて、信じられないほど大きく活動的な
 コミュニティーがあります。もしこれが信じられない場合、
-http://taichino.appspot.com/pypi_ranking/authors を見れば、目を見張る
+http://pypi-ranking.info/author を見れば、目を見張る
 ような現実に気がつくでしょう (eye-opening reality check)。
 
 
